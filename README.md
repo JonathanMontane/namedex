@@ -1,25 +1,47 @@
-# Namedex
+# Purpose
 
-Associate addresses with list of 3 to 5 words based on the needed precision
+Namedex is a small utility that transforms GPS coordinates into a list of words humans can read and say out loud, and back.
+This allows users to generate addresses for locations that would not have any otherwise.
 
-# Usage
+## Installation
+
+```bash
+npm install namedex
+yarn add namedex
+```
+
+## Usage
+Namedex exposes two methods: `encode` and `decode`.
+
+### encode(lat, lng, nbWords)
+
 ```js
-const namedex = require('./namedex');
+const namedex = require('namedex');
 
-// namedex(lat, lng, nbWords)
-console.log(namedex.encode(-77.480, 38.866, 3)); // [ 'heavenly', 'genuine', 'leafy' ]
-console.log(namedex.encode(-77.460, 38.866, 3)); // [ 'heavenly', 'genuine', 'merry' ]
-console.log(namedex.encode(-77.480, 38.896, 3)); // [ 'heavenly', 'genuine', 'needy' ]
+namedex.encode(48.880411, 2.327001, 3);
+// returns [ 'speedy', 'each', 'agreeable' ]
+namedex.encode(48.868423, 2.344898, 3);
+// returns [ 'speedy', 'each', 'beneficial' ]
+namedex.encode(48.858255, 2.349618, 3);
+// returns [ 'speedy', 'dual', 'shabby' ]
 
-console.log(namedex.encode(-77.480, 38.866, 4)); // [ 'heavenly', 'genuine', 'leafy', 'neighboring' ]
-console.log(namedex.encode(-77.480, 38.866, 5)); // [ 'heavenly', 'genuine', 'leafy', 'neighboring', 'glistening' ]
+namedex.encode(48.880411, 2.327001, 4);
+// returns [ 'speedy', 'each', 'agreeable', 'forceful' ]
+namedex.encode(48.880411, 2.327001, 5);
+// returns [ 'speedy', 'each', 'agreeable', 'forceful', 'sturdy' ]
+```
 
-console.log(namedex.decode([ 'heavenly', 'genuine', 'leafy', 'neighboring', 'glistening' ]));
-/*
+### decode(words)
+
+```js
+const namedex = require('namedex');
+
+namedex.decode([ 'speedy', 'each', 'agreeable', 'forceful' ]);
+/* returns 
 {
-  lng: -77.48000085353851,
-  lat: 38.86599987745285,
-  error: { lng: 0.000005364418029785156, lat: 0.000002682209014892578 }
+  lng: 48.88040542602539,
+  lat: 2.326955795288086,
+  error: { lng: 0.000171661376953125, lat: 0.0000858306884765625 }
 }
 */
 ```
