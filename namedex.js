@@ -21,11 +21,23 @@ const base36ToDecimal = (b36) => {
   return b36.charCodeAt(0) - 48;
 }
 
+const decimalToBase36 = (dec) => {
+  const offset = dec < 10 ? 48 : 87;
+  return String.fromCharCode(offset + dec);
+}
+
 const convertIdToIndex = (id) => {
   return base36ToDecimal(id[0]) * 36 + base36ToDecimal(id[1])
 }
 
-const namedex = (lat, lng, words = 3) => {
+const convertIndexToId = (index) => {
+  const firstLetter = decimalToBase36(Math.floor(index / 36));
+  const secondLetter = decimalToBase36(index % 36);
+
+  return firstLetter + secondLetter;
+}
+
+const encode = (lat, lng, words = 3) => {
   const geohash = Geohash.encode(lat, lng, words * 2);
   const wordsIds = split2Letters(geohash);
   const wordsIndex = wordsIds.map(convertIdToIndex);
@@ -33,4 +45,14 @@ const namedex = (lat, lng, words = 3) => {
   return wordsIndex.map((index) => adjectives[index]);
 }
 
-module.exports = namedex;
+const decode = (words) => {
+  const indices = words.map((word) => adjectives.indexOf(word));
+  const ids = indices.map(convertIndexToId);
+  const geohash = ids.join('');
+  return Geohash.decode(geohash, true);
+}
+
+module.exports = {
+  encode,
+  decode
+};
