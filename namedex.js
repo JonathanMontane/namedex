@@ -33,6 +33,4 @@ const namedex = (lat, lng, words = 3) => {
   return wordsIndex.map((index) => adjectives[index]);
 }
 
-console.log(-77.480, 38.866, namedex(-77.480, 38.866, 3));
-console.log(-77.460, 38.866, namedex(-77.460, 38.866, 3));
-console.log(-77.480, 38.896, namedex(-77.480, 38.896, 3));
+module.exports = namedex;
