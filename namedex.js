@@ -11,28 +11,23 @@ const split2Letters = (text) => {
   }, []);
 }
 
-const base36ToDecimal = (b36) => {
-  if (b36.charCodeAt(0) >= 97) {
-    //letter
-    return b36.charCodeAt(0) - 97 + 10
-  }
+const base32Map = '0123456789bcdefghjkmnpqrstuvwxyz';
 
-  // number
-  return b36.charCodeAt(0) - 48;
+const base32ToDecimal = (b32) => {
+  return base32Map.indexOf(b32);
 }
 
-const decimalToBase36 = (dec) => {
-  const offset = dec < 10 ? 48 : 87;
-  return String.fromCharCode(offset + dec);
+const decimalToBase32 = (dec) => {
+  return base32Map[dec];
 }
 
 const convertIdToIndex = (id) => {
-  return base36ToDecimal(id[0]) * 36 + base36ToDecimal(id[1])
+  return base32ToDecimal(id[0]) * 32 + base32ToDecimal(id[1])
 }
 
 const convertIndexToId = (index) => {
-  const firstLetter = decimalToBase36(Math.floor(index / 36));
-  const secondLetter = decimalToBase36(index % 36);
+  const firstLetter = decimalToBase32(Math.floor(index / 32));
+  const secondLetter = decimalToBase32(index % 32);
 
   return firstLetter + secondLetter;
 }
