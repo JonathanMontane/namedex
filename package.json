@@ -1,0 +1,9 @@
+{
+  "name": "namedex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@geonet/geohash": "^1.0.10"
+  }
+}
