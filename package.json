@@ -2,8 +2,10 @@
   "name": "namedex",
   "version": "1.0.0",
   "main": "namedex.js",
-  "license": "MIT",
+  "description": "an open source word-addressing system based on geohash",
+  "license": "Apache-2.0",
   "dependencies": {
     "@geonet/geohash": "^1.0.10"
-  }
+  },
+  "devDependencies": {}
 }
